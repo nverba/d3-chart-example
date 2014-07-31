@@ -81,6 +81,7 @@ header {
 
 #svg {
   position:absolute;
+  box-shadow:  8px 11px 45px #CECECE, 1px -1px 5px #DDD;
   left: 350px;
   top: 50px;
 }
@@ -102,7 +103,7 @@ header {
 .subhead {
   width:235px;
   height:20px;
-  background-color: #9ee6f4;
+  background-color: #93b7bd;
   padding:5px;
   font-weight: bold;
   color: #fff;

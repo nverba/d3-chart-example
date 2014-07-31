@@ -10,7 +10,7 @@ function chart() {
         height = 500, // default height
         padding = 40,
         parseDate = d3.time.format.utc("%x").parse,
-        colors = ["#9ee6f4", "#8cc99f", "#f76864", "#fedd76"],
+        colors = ["#93b7bd", "#acbd4d", "#f4705b", "#f6ac55"],
         labels = ["TOTAL FOLLOWERS", "NEW FOLLOWERS", "UNFOLLOWED", "RETURNED"],
         active_totals = [0, 1, 2, 3],
         check_state,
@@ -26,7 +26,7 @@ function chart() {
         svg.append("rect")
             .attr("width", "100%")
             .attr("height", "100%")
-            .attr("fill", "#f5f7eb");
+            .attr("fill", "#f3f3f3");
 
         var chart = svg.append("svg:g")
             .attr("id", "chart_area")
@@ -57,7 +57,7 @@ function chart() {
             .attr( "height", 50 )
             .attr("x", 0)
             .attr("y", 0)
-            .attr( "fill", "#9ee6f4" );
+            .attr( "fill", "#8cc99f" );
 
         footer = svg.append("svg:g")
             .attr("id", "footer")
@@ -69,7 +69,7 @@ function chart() {
             .attr( "height", 50 )
             .attr("x", 0)
             .attr("y", 450)
-            .attr( "fill", "#ff7d7c" );
+            .attr( "fill", "#93b7bd" );
 
         user_name = header.append( "text" )
             .attr("class", "tote_dates")
@@ -477,7 +477,7 @@ function chart() {
             .style("font-family", "'Open Sans', sans-serif;")
             .style("font-size", "24")
             .style("font-weight", "bold")
-            .style("fill", "#9ee6f4");
+            .style("fill", "#3B9CAF");
 
     }
 
