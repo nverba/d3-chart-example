@@ -1,16 +1,20 @@
-var myChart = chart().width(800).height(450);
+// Custom chart for displaying Twitch data //
+// Michael Murray 2013, @nverba //
+
+var myChart = chart();
 
 function chart() {
 
     // Default vars
-    var width = 800, // default width
-        height = 450, // default height
+    var width = 850, // default width
+        height = 500, // default height
         padding = 40,
         parseDate = d3.time.format.utc("%x").parse,
-        colors = ["", "#666666", "#999999", "#CCCCCC"],
-        labels = ["Total Followers", "Followed", "Unfollowed", "Returned"],
+        colors = ["#9ee6f4", "#8cc99f", "#f76864", "#fedd76"],
+        labels = ["TOTAL FOLLOWERS", "NEW FOLLOWERS", "UNFOLLOWED", "RETURNED"],
         active_totals = [0, 1, 2, 3],
-        check_state;
+        check_state,
+        user = 'nverba';
 
     function init_chart(){
 
@@ -22,57 +26,63 @@ function chart() {
         svg.append("rect")
             .attr("width", "100%")
             .attr("height", "100%")
-            .attr("fill", "#F2F2F2");
+            .attr("fill", "#f5f7eb");
 
         var chart = svg.append("svg:g")
             .attr("id", "chart_area")
             .attr("width", width - padding * 2)
             .attr("height", height - padding)
-            .attr("transform", "translate(" + padding + "," + 120 + ")");
+            .attr("transform", "translate(" + (padding + 1) + "," + 149 + ")");
 
         clip = chart.append("svg:clipPath")
             .attr("id", "clip")
             .append("svg:rect")
-            .attr("width", "720")
-            .attr("height", "100%");
+            .attr("width", "770")
+            .attr("height", "110%")
+            .attr("transform", "translate(0, -20)");
 
         totals = svg.append("svg:g")
             .attr("id", "totals")
             .attr("width", width - padding * 2)
             .attr("height", 100)
-            .attr("transform", "translate(" + (padding + 170) + ",20)");
+            .attr("transform", "translate(" + (padding + 155) + ",20)");
 
-        dates = svg.append("svg:g")
-            .attr("id", "dates")
-            .attr("width", 160)
-            .attr("height", 100)
-            .attr("transform", "translate(" + (padding) + ", -150)");
+        header = svg.append("svg:g")
+            .attr("id", "header")
+            .attr("width", "100%")
+            .attr("height", 50);
 
-        dates.transition()
-            .duration(500)
-            .delay(600)
-            .attr("transform", "translate(" + (padding) + ", 20)");
-
-        dates.append( "rect" )
-            .attr( "width", 160 )
-            .attr( "height", 70 )
+        header.append( "rect" )
+            .attr( "width", "100%" )
+            .attr( "height", 50 )
             .attr("x", 0)
             .attr("y", 0)
-            .attr( "fill", "#E6E6E6" );
+            .attr( "fill", "#9ee6f4" );
 
-        tote_start = dates.append( "text" )
+        footer = svg.append("svg:g")
+            .attr("id", "footer")
+            .attr("width", "100%")
+            .attr("height", 50);
+
+        footer.append( "rect" )
+            .attr( "width", "100%" )
+            .attr( "height", 50 )
+            .attr("x", 0)
+            .attr("y", 450)
+            .attr( "fill", "#ff7d7c" );
+
+        user_name = header.append( "text" )
             .attr("class", "tote_dates")
-            .attr("x", 135)
+            .attr("x", 20)
             .attr("y", 30)
-            .attr("text-anchor", "end")
-            .attr("fill", 'darkgray');
+            .attr("text-anchor", "start")
+            .text("@" + user);
 
-        tote_end = dates.append( "text" )
+        date_start = header.append( "text" )
             .attr("class", "tote_dates")
-            .attr("x", 135)
-            .attr("y", 50)
-            .attr("text-anchor", "end")
-            .attr("fill", 'darkgray');
+            .attr("x", 845)
+            .attr("y", 30)
+            .attr("text-anchor", "end");
 
         // All axis offset x & y by 0.5 to prevent antaliasing when converting to canvas
         // .x.axis
@@ -84,13 +94,13 @@ function chart() {
         d3.select("#svg")
             .append("svg:g")
             .attr("class", "y axis")
-            .attr("transform", "translate(" + (padding - 2.5) + ", 305.5)");
+            .attr("transform", "translate(" + (padding - 2.5) + ", 333)");
 
         // .yr.axis
         d3.select("#svg")
             .append("svg:g")
             .attr("class", "yr axis")
-            .attr("transform", "translate(" + (width - padding + 2.5) + ", 120.5)");
+            .attr("transform", "translate(" + (width - padding + 2.5) + ", 149)");
 
         return chart;
     }
@@ -127,31 +137,28 @@ function chart() {
 
         day_width = (width - padding * 2) / selection.length,
         bar_width = (day_width / _.without(bars_show, 0).length),
-        scaleX_axis = d3.time.scale.utc().domain(days_ext).rangeRound([0, width - (padding * 2) - day_width]),
+
         scaleL_axis = d3.scale.linear().domain([0, bars_max]).rangeRound([115, 0]),
         scaleR_axis = d3.scale.linear().domain(total_ext).rangeRound([175, 0]),
         scaleX_bars = d3.time.scale.utc().domain(days_ext).range([0, width - (padding * 2) - day_width]),
-        scaleX_line = d3.time.scale.utc().domain(days_ext).range([0, width - (padding * 2)]),
+        scaleX_line = d3.time.scale.utc().domain(days_ext).range([6.5, width - (padding * 2) - 6.5]),
         scaleY_bars = d3.scale.linear().domain([0, bars_max]).rangeRound([115, 0]),
         scaleY_line = d3.scale.linear().domain(total_ext).range([175, 0]),
-        xAxis = selection.length <= 13 ? d3.svg.axis().scale(scaleX_axis).ticks(selection.length) : d3.svg.axis().scale(scaleX_bars),
-        ylAxis = d3.svg.axis().scale(scaleL_axis).orient("left"),
-        yrAxis = d3.svg.axis().scale(scaleR_axis).orient("right"),
 
-        area = d3.svg.area().x(function(d) {
-            return scaleX_line(parseDate(d[0]));
-        }).y0(300).y1(function(d) {
-            return scaleY_line(d[4]);
-        }),
+        xAxis = d3.svg.axis().scale(scaleX_bars).tickSize(10).tickPadding(8),
+        ylAxis = d3.svg.axis().scale(scaleL_axis).orient("left").tickValues(scaleL_axis.domain()),
+        yrAxis = d3.svg.axis().scale(scaleR_axis).orient("right").tickValues(scaleR_axis.domain()),
 
-        // For inserting area with no height before transformation.
-        no_area = d3.svg.area().x(function(d) {
-            return scaleX_line(parseDate(d[0]));
-        }).y0(300).y1(300),
+        line = d3.svg.line()
+            .x(function(d) { return scaleX_line(parseDate(d[0])); })
+            .y(function(d) { return scaleY_line(d[4]); });
 
         // Total followers path.
         path = chart_area.selectAll("path")
             .data([datum]);
+
+        points = chart_area.selectAll("circle")
+            .data(datum);
 
         function widgetVal(d) {
             return d === 0 ?  _.last(selection)[4] : _.sum_nested(selection, d);
@@ -171,15 +178,35 @@ function chart() {
             path.enter()
                 .append("svg:path")
                 .attr("clip-path", "url(#clip)")
-                .attr("fill", "#E6E6E6")
-                .attr("d", area);
+                .attr("class", "line")
+                .attr("d", line);
 
             path.transition()
                 .duration(400)
+                .style("opacity", 1)
                 .ease("quad")
-                .attr("d", area);
+                .attr("d", line);
 
             path.exit()
+                .remove();
+
+            points.enter()
+                .append("svg:circle")
+                .attr("clip-path", "url(#clip)")
+                .attr("class", "point")
+                .attr("cx", function(d) { return scaleX_line(parseDate(d[0])); })
+                .attr("cy", function(d) { return scaleY_line(d[4]); })
+                .attr("r", 5);
+
+            points.transition()
+                .duration(400)
+                .style("opacity", 1)
+                .ease("quad")
+                .attr("cx", function(d) { return scaleX_line(parseDate(d[0])); })
+                .attr("cy", function(d) { return scaleY_line(d[4]); })
+                .attr("r", 5);
+
+            points.exit()
                 .remove();
 
             d3.select(".yr.axis")
@@ -189,10 +216,14 @@ function chart() {
                 .call(yrAxis);
 
         } else {
+
             path.transition()
                 .duration(400)
-                .ease("quad")
-                .attr("d", no_area);
+                .style("opacity", 0);
+
+            points.transition()
+                .duration(400)
+                .style("opacity", 0);
 
             d3.select(".yr.axis")
                 .transition()
@@ -286,9 +317,9 @@ function chart() {
         });
 
         d3.select(".x.axis")
-            .attr("transform", "translate( " + (Math.round(padding + (day_width / 2)) + 0.5) + ", 422.5)")
+            .attr("transform", "translate( " + (Math.round(padding + (day_width / 2)) + 0.5) + ", 450)")
             .transition()
-            .duration(2000)
+            .duration(400)
             .call(xAxis);
 
         d3.select(".y.axis")
@@ -300,6 +331,7 @@ function chart() {
         active_totals = checkedBoxes("barBox", [0, 1, 2, 3]);
 
         // Totals
+
         tote_rect = totals.selectAll("rect.tote")
             .data(active_totals, function(d){ return d; });
 
@@ -312,77 +344,74 @@ function chart() {
         tote_rect.enter()
             .append( "rect" )
             .attr("class", "tote")
-            .attr( "width", 130 )
-            .attr( "height", 70 )
+            .attr( "width", 140 )
+            .attr( "height", 10 )
             .attr("x", function(d, i) { return i * 140; })
             .attr("y", -150)
-            .attr( "fill", "#E6E6E6" );
+            .attr( "fill", function(d, i) { return colors[i]; } );
 
         tote_label.enter()
             .append( "text" )
             .attr("class", "tote_label")
             .text(function(d) { return labels[d]; })
-            .attr("x", function(d, i) { return i * 140 + 65; })
-            .attr("y", -150 + 30)
-            .attr("text-anchor", "middle")
-            .attr("fill", 'darkgray');
+            .attr("x", function(d, i) { return i * 140 - 140; })
+            .attr("y", -150 + 60)
+            .attr("text-anchor", "start")
+            .attr("fill", '#9e9e9e');
 
         tote_val.enter()
             .append( "text" )
             .attr("class", "tote_val")
             .text(function(d) { return widgetVal(d); })
-            .attr("x", function(d, i) { return i * 140 + 65; })
-            .attr("y", -150 + 50)
-            .attr("text-anchor", "middle")
-            .attr("fill", 'darkgray');
+            .attr("x", function(d, i) { return i * 140 - 140; })
+            .attr("y", -150 + 35)
+            .attr("text-anchor", "start");
 
-        tote_start.transition()
-            .text("From: " + flat_dates[0]);
-
-        tote_end.transition()
-            .text("To: " + flat_dates[1]);
+        date_start.transition()
+            .text(moment(flat_dates[0]).format("MMM Do") + " - " + moment(flat_dates[1]).format("MMM Do YYYY"));
 
         if (unchecked){
+
             tote_rect.transition()
                 .duration(500)
                 .delay(500)
-                .attr("x", function(d, i) { return i * 140; });
+                .attr("x", function(d, i) { return i * 170 - 170; });
 
             tote_label.transition()
                 .duration(500)
                 .delay(500)
-                .attr("x", function(d, i) { return i * 140 + 65; });
+                .attr("x", function(d, i) { return i * 170 - 170; });
 
             tote_val.transition()
                 .duration(500)
                 .tween("text", widgetTween)
                 .delay(500)
-                .attr("x", function(d, i) { return i * 140 + 65; });
+                .attr("x", function(d, i) { return i * 170 - 170; });
 
         } else {
 
             tote_rect.transition()
                 .duration(500)
-                .attr("x", function(d, i) { return i * 140; })
+                .attr("x", function(d, i) { return i * 170 - 170; })
                 .transition()
                 .delay(500)
-                .attr("y", 0);
+                .attr("y", 95);
 
             tote_label.transition()
                 .duration(500)
-                .attr("x", function(d, i) { return i * 140 + 65; })
+                .attr("x", function(d, i) { return i * 170 - 170; })
                 .transition()
                 .delay(500)
-                .attr("y", 30);
+                .attr("y", 85);
 
             tote_val.transition()
                 .duration(500)
-                .attr("x", function(d, i) { return i * 140 + 65; })
+                .attr("x", function(d, i) { return i * 170 - 170; })
                 .text(function retn(d) { return widgetVal(d); })
                 .tween("text", widgetTween)
                 .transition()
                 .delay(500)
-                .attr("y", 50);
+                .attr("y", 65);
         }
 
         tote_rect.exit()
@@ -409,21 +438,46 @@ function chart() {
             .delay(500)
             .remove();
 
-        d3.selectAll(".axis path, .axis line")
+        d3.selectAll(".y path, .y line, .yr path, .yr line")
             .style("fill", "none")
             .style("shape-rendering", "crispEdges")
             .style("stroke", "rgba(169, 169, 138, 0.4)");
 
-        d3.selectAll(".axis text")
-            .style("font-size", "10")
-            .style("font-family", "Ubuntu Mono")
-            .style("fill", "#a9a9a9");
+        d3.selectAll(".x line")
+            .style("fill", "none")
+            .style("stroke", "#fff");
 
-        d3.selectAll("#dates text, #totals text")
-            .style("font-size", "13")
-            .style("font-family", "arial")
+        d3.selectAll(".x path")
+            .style("fill", "none")
+            .style("display", "none");
+
+        d3.selectAll(".y, .yr")
+            .style("font-size", "10")
+            .style("font-family", "'Open Sans', sans-serif;")
+            .style("fill", "#9e9e9e");
+
+        d3.selectAll(".x text")
+            .style("font-size", "15")
+            .style("font-family", "'Open Sans', sans-serif;")
+            .style("fill", "#fff");
+
+        d3.selectAll("#header text")
+            .style("font-size", "18")
+            .style("font-family", "'Open Sans', sans-serif;")
+            .style("font-weight", "normal")
+            .style("fill", "#fff");
+
+        d3.selectAll(".tote_label")
+            .style("font-size", "14")
+            .style("font-family", "'Open Sans', sans-serif;")
+            .style("font-weight", "normal")
+            .style("fill", "#9e9e9e");
+
+        d3.selectAll(".tote_val")
+            .style("font-family", "'Open Sans', sans-serif;")
+            .style("font-size", "24")
             .style("font-weight", "bold")
-            .style("fill", "#a9a9a9");
+            .style("fill", "#9ee6f4");
 
     }
 
@@ -463,7 +517,7 @@ function chart() {
     return my;
 }
 
-d3.json("/stats.json", function (data) {
+d3.json("stats.json", function (data) {
 
     myChart.datum(data);
     myChart(data);

@@ -1,83 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <script src="http://code.jquery.com/jquery-2.0.0.min.js"></script>
-    <script src="js/moment.min.js"></script>
-    <script src="js/daterangepicker.js"></script>
-    <script src="js/rgbcolor.js"></script>
-    <script src="js/canvg.js"></script>
-    <script src="bootstrap/js/bootstrap.js"></script>
-    <script src="js/d3.v3.js" ></script>
-    <script src="js/lo-dash.js" ></script>
-    <script src="js/lo-dash-mixin.js" ></script>
 
-    <link rel="stylesheet" type='text/css' href="bootstrap/css/bootstrap.min.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/daterangepicker.css" />
-    <link rel="stylesheet" type='text/css' href="./stylesheets/font-awesome.min.css">
-    <link rel='stylesheet' type='text/css' href='./stylesheets/app.css' >
-
-    <title>Sample Chart</title>
     <meta charset="utf-8" />
+    <title>Simple Twitter Stats</title>
+
+    <link rel="stylesheet" type="text/css" href='../stylesheets/app.css' >
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+    <script src="http://code.jquery.com/jquery-2.0.0.min.js"></script>
+    <script src="../js/moment.min.js"></script>
+    <script src="../js/rgbcolor.js"></script>
+    <script src="../js/canvg.js"></script>
+    <script src="../js/lo-dash.js" ></script>
+    <script src="../js/lo-dash-mixin.js" ></script>
+    <script src="../js/d3.v3.js" ></script>
+    <script src="../js/pikaday.js"></script>
+    <script src="../js/date_pickers.js" ></script>
+    <script src="../js/twitch_chart.js" ></script>
+
   </head>
   <body>
 
+<link rel="stylesheet" type="text/css" href='../stylesheets/pikaday.css' >
+<link rel="stylesheet" type="text/css" href='../stylesheets/twitch_chart.css' >
+
 <div id="container">
 
-  <script src="js/stats.js" ></script>
-
   <aside>
-
+    <div class="subhead">SHOW:</div>
     <form>
-      <div class="controls">
-        <div class="input-prepend">
-          <span class="add-on"><i class="icon-calendar"></i></span><input type="text" name="reportrange" id="reportrange" />
-        </div>
-      </div>
 
-      <label class="checkbox"><input type="checkbox" id="checkTotal" class="barBox" name="mode" value="total" onclick="myChart();" checked>Total Followers</label>
-      <label class="checkbox"><input type="checkbox"  id="checkFollowed" class="barBox" name="mode" value="followed" onclick="myChart();" checked>Followed</label>
-      <label class="checkbox"><input type="checkbox" id="checkUnfollowed" class="barBox" name="mode" value="unfollowed" onclick="myChart();" checked>Unfollowed</label>
-      <label class="checkbox"><input type="checkbox" id="checkReturned" class="barBox" name="mode" value="returned" onclick="myChart();" checked>Returned</label>
+      <label class="checkbox"><input type="checkbox" id="checkTotal" class="barBox" value="total" onclick="myChart();" checked>Total Followers</label>
+      <br>
+      <label class="checkbox"><input type="checkbox"  id="checkFollowed" class="barBox" value="followed" onclick="myChart();" checked>New Followers</label>
+      <br>
+      <label class="checkbox"><input type="checkbox" id="checkUnfollowed" class="barBox" value="unfollowed" onclick="myChart();" checked>Unfollowed</label>
+      <br>
+      <label class="checkbox"><input type="checkbox" id="checkReturned" class="barBox" value="returned" onclick="myChart();" checked>Returned</label>
+
     </form>
-    <a href="#myModal" role="button" class="btn" data-toggle="modal" onclick="draw();">Convert to PNG</a>
 
-    <script>
-
-      function datePicker(data){
-        var start_date =  data[data.length - 7] ? data[data.length - 7][0] : data[0][0];
-        $('#reportrange').daterangepicker(
-          {
-            ranges: {
-             'Last 7 Days': [moment().subtract('days', 6), new Date()],
-             'Last 30 Days': [moment().subtract('days', 29), new Date()],
-             'This Month': [moment().startOf('month'), moment().endOf('month')],
-             'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
-            },
-            startDate: start_date,
-            endDate: _.last(data)[0],
-            minDate: data[0][0],
-            maxDate: _.last(data)[0],
-            showWeekNumbers: true,
-            buttonClasses: ['btn-danger'],
-            dateLimit: false
-          },
-
-          function(start, end) {
-            myChart(data.slice(d3.bisectLeft(data, start.format('L')), d3.bisectLeft(data, end.format('L')) + 1));
-          }
-        );
-        // set initial date of label
-        $('#reportrange').val( start_date + ' - ' + _.last(data)[0]);
-      }
-
-    </script>
+    <div class="subhead">FROM:</div>
+    <div id="from_datepicker"></div>
+    <div class="subhead">TO:</div>
+    <div id="to_datepicker"></div>
 
     <script>
       function draw(){
         var $container = $('#svg-container'),
             // Canvg requires trimmed content
             content = $container.html().trim(),
-            canvas  = document.getElementById('svg-canvas');
+            canvas = document.getElementById('svg-canvas');
 
         // Draw svg on canvas
         canvg(canvas, content);
@@ -88,14 +62,23 @@
       }
     </script>
 
+    <div class="subhead">EXPORT:</div>
+    <div id="export-btn">
+      <a href="#myModal" role="button" class="convert" data-toggle="modal" data-target="#myModal" onclick="draw();">Convert to PNG</a>
+    </div>
+
   </aside>
   <div id='svg-container'>
-    <svg id="svg">
-
-    </svg>
+    <svg id="svg"></svg>
   </div>
 
   <canvas id="svg-canvas"></canvas>
+</div>
+
+<div id="img-layer">
+  <img id="svg-img" />
+</div>
+
 
   </body>
 </html>

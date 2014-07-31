@@ -1,0 +1,22 @@
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.line {
+  fill: none;
+  stroke: #9ee6f4;
+  stroke-width: 3px;
+}
+
+.point {
+  fill: #f5f7eb;
+  stroke: #9ee6f4;
+  stroke-width: 3px;
+}

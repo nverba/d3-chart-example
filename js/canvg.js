@@ -193,7 +193,7 @@
 			// definition extensions
 				// get the definition from the definitions table
 				svg.Property.prototype.getDefinition = function() {
-					var name = this.value.match(/#([^\)']+)/);
+					var name = this.value.match(/#([^\)'"]+)/);
 					if (name) { name = name[1]; }
 					if (!name) { name = this.value; }
 					return svg.Definitions[name];
@@ -856,8 +856,8 @@
 				}
 				
 				// clip
-				if (this.attribute('clip-path').hasValue()) {
-					var clip = this.attribute('clip-path').getDefinition();
+				if (this.style('clip-path').hasValue()) {
+					var clip = this.style('clip-path').getDefinition();
 					if (clip != null) clip.apply(ctx);
 				}
 				
@@ -1990,8 +1990,8 @@
 				}
 			}
 			
-			var textAnchor = this.style('text-anchor').valueOrDefault('start');
 			this.getAnchorDelta = function (ctx, parent, startI) {
+				var textAnchor = this.style('text-anchor').valueOrDefault('start');
 				if (textAnchor != 'start') {
 					var width = 0;
 					for (var i=startI; i<parent.children.length; i++) {

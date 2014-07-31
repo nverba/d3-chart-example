@@ -1,4 +1,4 @@
-
+// Some custom helpers for Twitch
 _.mixin({
 
   labelize: function(str) {
