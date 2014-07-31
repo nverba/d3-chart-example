@@ -1,0 +1,75 @@
+.login { 
+  margin-bottom: 10px;
+}
+
+
+.log-icon { 
+  font-family: FontAwesome;
+  font-size: 30px;
+}
+
+.wgt-total { 
+  font-weight: bold;
+  font-size: 30px;
+}
+
+.wgt-label { 
+  font-weight: bold; 
+}
+
+aside { 
+  position:absolute;
+  width: 245px;
+  top:0;
+  bottom:0;
+  left:0;
+  padding: 20px;
+  background-color: #DFEFF0;
+}
+
+header { 
+  margin-left:290px;
+  width: 850px;
+  height: 60px;
+  background-color: #eee;
+}
+
+.pickdates { 
+  padding: 13px;
+}
+
+.svg-document { 
+  margin-left:290px;
+  margin-top: 20px;
+}
+
+#range { 
+  margin-left: 10px;
+}
+
+.caret { 
+  margin: 7px 0 0 6px;
+}
+
+
+/*  updating trends */
+
+.trends { 
+  margin-left:290px;
+  margin-top: 20px;
+}
+
+#svg { 
+  position:absolute;
+  left: 350px;
+  top: 50px;
+}
+
+#svg-canvas { 
+  position: fixed;
+  left: 3000px;
+}
+
+.top50 {
+  margin-top: 50px;
+}
