@@ -71,6 +71,12 @@ function chart() {
             .attr("y", 450)
             .attr( "fill", "#93b7bd" );
 
+        footer.append("svg:circle")
+            .attr("cx", 26)
+            .attr("cy", 447)
+            .attr("r", 8)
+            .attr("fill", "#f3f3f3");
+
         user_name = header.append( "text" )
             .attr("class", "tote_dates")
             .attr("x", 20)
