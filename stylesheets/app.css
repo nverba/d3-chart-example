@@ -1,5 +1,31 @@
-.login {
-  margin: 10px;
+@font-face {
+  font-family: "roboto";
+  src: url("../RobotoTTF/Roboto-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "robotoblack_italic";
+  src: url("../RobotoTTF/Roboto-BlackItalic.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "roboto_bolditalic";
+  src: url("../RobotoTTF/Roboto-BoldItalic.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+#heading {
+  text-align: center;
+  font-size: 20px
+}
+
+aside {
+  font-family: "robotoblack_italic";
 }
 
 #img-layer {
@@ -21,7 +47,7 @@ html, body {
 
 body {
   background-color: #fdfdfd;
-  font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: 'roboto';
 }
 
 .wgt-total {
@@ -101,11 +127,11 @@ header {
 
 
 .subhead {
+  font-size: 16px;
   width:235px;
   height:20px;
   background-color: #93b7bd;
   padding:5px;
-  font-weight: bold;
   color: #fff;
 }
 
