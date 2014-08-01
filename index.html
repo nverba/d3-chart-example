@@ -48,7 +48,7 @@
 
           <label class="checkbox"><input type="checkbox" id="checkReturned" class="barBox" value="returned" onclick="myChart();" checked>Returned</label>
 
-          <button class="convert" type="button" onclick="draw();">Convert to PNG</button>
+          <button class="convert" id="convert-png" type="button">Convert to PNG</button>
 
         </form>
 
@@ -63,22 +63,6 @@
         <div class="subhead">TO:</div>
         <div id="to_datepicker"></div>
 
-        <script>
-          function draw(){
-            var $container = $('#svg-container'),
-                // Canvg requires trimmed content
-                content = $container.html().trim(),
-                canvas = document.getElementById('svg-canvas');
-
-            // Draw svg on canvas
-            canvg(canvas, content);
-
-            // Change img be SVG representation
-            var theImage = canvas.toDataURL('image/png');
-            $('#svg-img').attr('src', theImage);
-          }
-        </script>
-
       </aside>
 
       <div id='svg-container'>
@@ -91,6 +75,36 @@
         <img id="svg-img" />
       </div>
     </div>
+
+    <script>
+
+      var button    = document.getElementById('convert-png'),
+          container = document.getElementById('svg-container'),
+          canvas    = document.getElementById('svg-canvas'),
+          image     = document.getElementById('svg-img'),
+          layer     = document.getElementById('img-layer');
+
+      button.onclick = draw;
+
+      function resetLayer() {
+        layer.style.display = 'none';
+      }
+
+      function draw(){
+
+        var content = container.innerHTML.trim(); // Canvg requires trimmed content
+
+        // Draw svg on canvas
+        canvg(canvas, content);
+        // Display layer
+        layer.onclick       = resetLayer;
+        layer.style.display = 'block';
+
+        // Change img be SVG representation
+        var theImage = canvas.toDataURL('image/png');
+        image.src    = theImage;
+      }
+    </script>
 
   </body>
 </html>
