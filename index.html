@@ -3,82 +3,85 @@
   <head>
 
     <meta charset="utf-8" />
-    <title>Simple Twitter Stats</title>
+    <title>Simple Twitter Chart</title>
 
     <link rel="stylesheet" type="text/css" href='../stylesheets/app.css' >
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href='../stylesheets/pikaday.css' >
+    <link rel="stylesheet" type="text/css" href='../stylesheets/twitter_chart.css' >
 
-    <script src="http://code.jquery.com/jquery-2.0.0.min.js"></script>
-    <script src="../js/moment.min.js"></script>
-    <script src="../js/rgbcolor.js"></script>
-    <script src="../js/canvg.js"></script>
-    <script src="../js/lo-dash.js" ></script>
+    <!-- libs -->
+
+    <script src="../js/canvg/rgbcolor.js"></script>
+    <script src="../js/canvg/StackBlur.js"></script>
+    <script src="../js/canvg/canvg.js"></script>
+
+    <script src="../js/lo-dash/lo-dash.js" ></script>
+
+    <script src="../js/pikaday/moment.min.js"></script>
+    <script src="../js/pikaday/pikaday.js"></script>
+
+    <script src="../js/d3/d3.v3.js" ></script>
+
+    <!-- custom scripts -->
+
     <script src="../js/lo-dash-mixin.js" ></script>
-    <script src="../js/d3.v3.js" ></script>
-    <script src="../js/pikaday.js"></script>
     <script src="../js/date_pickers.js" ></script>
-    <script src="../js/twitch_chart.js" ></script>
+    <script src="../js/twitter_chart.js" ></script>
 
   </head>
   <body>
 
-<link rel="stylesheet" type="text/css" href='../stylesheets/pikaday.css' >
-<link rel="stylesheet" type="text/css" href='../stylesheets/twitch_chart.css' >
+    <aside>
+      <span id="heading">Twitter Stats</span>
+      <div class="subhead">SHOW:</div>
+      <form>
 
-<div id="container">
+        <label class="checkbox"><input type="checkbox" id="checkTotal" class="barBox" value="total" onclick="myChart();" checked>Total Followers</label>
+        <br>
+        <label class="checkbox"><input type="checkbox"  id="checkFollowed" class="barBox" value="followed" onclick="myChart();" checked>New Followers</label>
+        <br>
+        <label class="checkbox"><input type="checkbox" id="checkUnfollowed" class="barBox" value="unfollowed" onclick="myChart();" checked>Unfollowed</label>
+        <br>
+        <label class="checkbox"><input type="checkbox" id="checkReturned" class="barBox" value="returned" onclick="myChart();" checked>Returned</label>
 
-  <aside>
-    <div class="subhead">SHOW:</div>
-    <form>
+      </form>
 
-      <label class="checkbox"><input type="checkbox" id="checkTotal" class="barBox" value="total" onclick="myChart();" checked>Total Followers</label>
-      <br>
-      <label class="checkbox"><input type="checkbox"  id="checkFollowed" class="barBox" value="followed" onclick="myChart();" checked>New Followers</label>
-      <br>
-      <label class="checkbox"><input type="checkbox" id="checkUnfollowed" class="barBox" value="unfollowed" onclick="myChart();" checked>Unfollowed</label>
-      <br>
-      <label class="checkbox"><input type="checkbox" id="checkReturned" class="barBox" value="returned" onclick="myChart();" checked>Returned</label>
+      <div class="subhead">FROM:</div>
+      <div id="from_datepicker"></div>
+      <div class="subhead">TO:</div>
+      <div id="to_datepicker"></div>
 
-    </form>
+      <script>
+        function draw(){
+          var $container = $('#svg-container'),
+              // Canvg requires trimmed content
+              content = $container.html().trim(),
+              canvas = document.getElementById('svg-canvas');
 
-    <div class="subhead">FROM:</div>
-    <div id="from_datepicker"></div>
-    <div class="subhead">TO:</div>
-    <div id="to_datepicker"></div>
+          // Draw svg on canvas
+          canvg(canvas, content);
 
-    <script>
-      function draw(){
-        var $container = $('#svg-container'),
-            // Canvg requires trimmed content
-            content = $container.html().trim(),
-            canvas = document.getElementById('svg-canvas');
+          // Change img be SVG representation
+          var theImage = canvas.toDataURL('image/png');
+          $('#svg-img').attr('src', theImage);
+        }
+      </script>
 
-        // Draw svg on canvas
-        canvg(canvas, content);
+      <div class="subhead">EXPORT:</div>
+      <div id="export-btn">
+        <a href="#myModal" role="button" class="convert" data-toggle="modal" data-target="#myModal" onclick="draw();">Convert to PNG</a>
+      </div>
 
-        // Change img be SVG representation
-        var theImage = canvas.toDataURL('image/png');
-        $('#svg-img').attr('src', theImage);
-      }
-    </script>
-
-    <div class="subhead">EXPORT:</div>
-    <div id="export-btn">
-      <a href="#myModal" role="button" class="convert" data-toggle="modal" data-target="#myModal" onclick="draw();">Convert to PNG</a>
+    </aside>
+    <div id='svg-container'>
+      <svg id="svg"></svg>
     </div>
 
-  </aside>
-  <div id='svg-container'>
-    <svg id="svg"></svg>
-  </div>
+    <canvas id="svg-canvas"></canvas>
 
-  <canvas id="svg-canvas"></canvas>
-</div>
-
-<div id="img-layer">
-  <img id="svg-img" />
-</div>
-
+    <div id="img-layer">
+      <img id="svg-img" />
+    </div>
 
   </body>
 </html>
