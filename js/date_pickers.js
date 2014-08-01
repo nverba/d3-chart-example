@@ -8,6 +8,11 @@ function datePicker(range) {
         onSelect: function(date) {
             from_date.value = from_picker.toString();
             myChart(range.slice(d3.bisectLeft(range, from_date.value), d3.bisectLeft(range, to_date.value) + 1));
+
+            to_picker.setMinDate(new Date(from_date.value));
+            to_picker.draw();
+
+
         },
         setDefaultDate: new Date(range[0][0]),
         defaultDate: new Date(range[0][0]),
@@ -27,6 +32,10 @@ function datePicker(range) {
         onSelect: function(date) {
             to_date.value = to_picker.toString();
             myChart(range.slice(d3.bisectLeft(range, from_date.value), d3.bisectLeft(range, to_date.value) + 1));
+
+            from_picker.setMaxDate(new Date(to_date.value));
+            from_picker.draw();
+
         },
         setDefaultDate: new Date(range[range.length - 1][0]),
         defaultDate: new Date(range[range.length - 1][0]),
