@@ -184,8 +184,10 @@ function chart() {
             path.enter()
                 .append("svg:path")
                 .attr("clip-path", "url(#clip)")
-                .attr("class", "line")
-                .attr("d", line);
+                .attr("d", line)
+                .attr("fill", "none")
+                .attr("stroke", "#93b7bd")
+                .attr("stroke-width", "3px");
 
             path.transition()
                 .duration(400)
@@ -199,10 +201,12 @@ function chart() {
             points.enter()
                 .append("svg:circle")
                 .attr("clip-path", "url(#clip)")
-                .attr("class", "point")
                 .attr("cx", function(d) { return scaleX_line(parseDate(d[0])); })
                 .attr("cy", function(d) { return scaleY_line(d[4]); })
-                .attr("r", 5);
+                .attr("r", 5)
+                .attr("fill", "#f5f7eb")
+                .attr("stroke", "#93b7bd")
+                .attr("stroke-width", "3px");
 
             points.transition()
                 .duration(400)

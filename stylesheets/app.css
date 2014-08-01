@@ -160,9 +160,8 @@ button:hover {
   top: 40px;
 }
 
-.pika-single, .pika-single button {
+.pika-single {
   border: none;
-  font-family: 'roboto';
 }
 
 .pika-button {
