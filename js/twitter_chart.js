@@ -1,4 +1,4 @@
-// Custom chart for displaying Twitch data //
+// Interactive chart for displaying basic Twitter stats //
 // Michael Murray 2013, @nverba //
 
 var myChart = chart();
@@ -419,8 +419,7 @@ function chart() {
             .duration(500)
             .attr("y", -150)
             .transition()
-            .delay(500)
-            .remove();
+            .delay(500);
 
         tote_label.exit()
             .transition()
