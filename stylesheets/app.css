@@ -21,6 +21,8 @@
 
 #heading {
   text-align: center;
+  display: block;
+  padding: 10px 0;
   font-size: 20px
 }
 
@@ -61,10 +63,11 @@ body {
 
 aside {
   position:absolute;
-  width: 245px;
+  width:260;
   top:0;
   bottom:0;
   left:0;
+  border-right: 1px solid #B1B1B1;
   background-color: #f5f7eb;
   color: #7a7a7a;
 }
@@ -128,7 +131,6 @@ header {
 
 .subhead {
   font-size: 16px;
-  width:235px;
   height:20px;
   background-color: #93b7bd;
   padding:5px;
@@ -151,4 +153,8 @@ a.convert {
 
 .convert a:visited {
   color: #fff;
+}
+
+.pika-single {
+  border: none;
 }
