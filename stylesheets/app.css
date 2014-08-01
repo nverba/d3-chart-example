@@ -39,18 +39,17 @@
 
   width: 1130px;
   height: 550px;
-  position: absolute;
-  bottom: 50%;
-  transform: translateY(50%) translateX(-50%);
-  box-shadow: 8px 11px 45px #CECECE, 1px -1px 5px #DDD;
-  left: 50%;
+  position: relative;
+  top: 40px;
+  margin: 0 auto;
+  box-shadow: 8px 11px 45px rgba(230, 230, 230, 0.88), 0px 3px 5px #D6D6D6;
 
 }
 
 header {
   height: 50px;
   background-color: #E2E2E2;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 260px;
   right: 0;
@@ -77,8 +76,10 @@ html, body {
 }
 
 body {
-  background-color: #fdfdfd;
+  background-color: #F5F5F5;
+  background-image: url('../img/paper.png');
   font-family: 'roboto';
+
 }
 
 #svg-container {
