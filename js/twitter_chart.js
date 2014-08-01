@@ -457,30 +457,30 @@ function chart() {
             .style("display", "none");
 
         d3.selectAll(".y, .yr")
-            .style("font-size", "10")
+            .style("font-size", "10px")
             .style("font-family", "'roboto';")
             .style("fill", "#9e9e9e");
 
         d3.selectAll(".x text")
-            .style("font-size", "12")
+            .style("font-size", "12px")
             .style("font-family", "'roboto';")
             .style("fill", "#fff");
 
         d3.selectAll("#header text")
-            .style("font-size", "18")
+            .style("font-size", "18px")
             .style("font-family", "'roboto';")
             .style("font-weight", "normal")
             .style("fill", "#fff");
 
         d3.selectAll(".tote_label")
-            .style("font-size", "14")
+            .style("font-size", "14px")
             .style("font-family", "'roboto';")
             .style("font-weight", "normal")
             .style("fill", "#9e9e9e");
 
         d3.selectAll(".tote_val")
             .style("font-family", "'roboto';")
-            .style("font-size", "24")
+            .style("font-size", "21px")
             .style("font-weight", "bold")
             .style("fill", "#3B9CAF");
 
