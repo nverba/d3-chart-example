@@ -58,8 +58,10 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     padding: 5px 3px;
     font-size: 14px;
     line-height: 20px;
-    font-weight: bold;
     background-color: #fff;
+    font-family: 'robotoblack_italic';
+    font-weight: normal;
+    color: #7A7A7A;
 }
 .pika-title select {
     cursor: pointer;
@@ -142,8 +144,9 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     color: #999;
     font-size: 12px;
     line-height: 25px;
-    font-weight: bold;
     text-align: center;
+    font-family: 'robotoblack_italic';
+    font-weight: normal;
 }
 
 .pika-button {
