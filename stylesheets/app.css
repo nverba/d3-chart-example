@@ -1,0 +1,170 @@
+@font-face {
+  font-family: "roboto";
+  src: url("../RobotoTTF/Roboto-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "robotoblack_italic";
+  src: url("../RobotoTTF/Roboto-Bold.ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: "robotoblack_italic";
+  src: url("../RobotoTTF/Roboto-BlackItalic.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "roboto_bolditalic";
+  src: url("../RobotoTTF/Roboto-BoldItalic.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+#heading {
+  height: 100px;
+  font-size: 25px;
+  line-height: 100px;
+  display: block;
+  text-align: center;
+}
+
+#container {
+
+  width: 1130px;
+  height: 550px;
+  position: relative;
+  top: 40px;
+  margin: 0 auto;
+  box-shadow: 8px 11px 45px rgba(230, 230, 230, 0.88), 0px 3px 5px #D6D6D6;
+
+}
+
+header {
+  height: 50px;
+  background-color: #E2E2E2;
+  position: absolute;
+  top: 0;
+  left: 260px;
+  right: 0;
+  z-index : 3;
+  color: #808080;
+  line-height: : 50px;
+  font-family: "robotoblack_italic";
+
+}
+
+header form {
+  line-height: 50px;
+}
+
+header form label {
+  margin-left: 20px;
+}
+
+html, body {
+  height: 100%;
+  width:100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #F5F5F5;
+  background-image: url('../img/paper.png');
+  font-family: 'roboto';
+
+}
+
+#svg-container {
+  position: absolute;
+  left: 260px;
+  top: 50px;
+}
+
+#svg {
+  width: 870px;
+  height: 500px;
+}
+
+#svg-canvas {
+  position: fixed;
+  left: 3000px;
+}
+
+aside {
+  font-family: "robotoblack_italic";
+  z-index: 2;
+  position:absolute;
+  width:260px;
+  bottom:0;
+  top: 0;
+  left:0;
+  border-right: 1px solid #B1B1B1;
+  background-color: #f5f7eb;
+  color: #7a7a7a;
+}
+
+.checkbox {
+  font-weight: normal;
+}
+
+.subhead {
+  font-size: 13px;
+  height:15px;
+  background-color: #E2E2E2;
+  padding:5px;
+  color: #808080;
+}
+
+.convert {
+  position: absolute;
+  right: 8px;
+}
+
+button.convert {
+  background-color: #f4705b;
+  border-radius: 4px;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  margin-top: 8px;
+  font-family: "robotoblack_italic";
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+#img-layer {
+  position:fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 4;
+  display: none;
+}
+
+#img-layer img {
+  position: relative;
+  display: block;
+  margin: 0 auto;
+  top: 40px;
+}
+
+.pika-single {
+  border: none;
+}
+
+.pika-button {
+  padding: 4px;
+}
+
