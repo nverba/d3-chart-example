@@ -6,4 +6,4 @@ The backend became unsustainable after Twitter changed the API and associated ra
 You can see the live example over on the [Demo](http://nverba.github.io/d3-chart-example/) page, it is set up with a single month of dummy data.
 
 
-Code licensed under the [MIT License](href="http://opensource.org/licenses/MIT). Documentation licensed under [CC BY 3.0](http://creativecommons.org/licenses/by/3.0/)
+Code licensed under the [MIT License](http://opensource.org/licenses/MIT). Documentation licensed under [CC BY 3.0](http://creativecommons.org/licenses/by/3.0/).
